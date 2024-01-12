@@ -34,9 +34,8 @@
   </div>
   <div v-for="(talk, index) in talks" class="p-15px">
     <div class="w-100% h-1px bg-gray mt-15px mb-30px"></div>
-    <p class="min-h-10 vh">{{ talk.text }}</p>
-    <p>{{ talk.writer }}</p>
-    <p class>at {{ talk.time }}</p>
+    <p class="min-h-10 vh pl-10px">{{ talk.text }}</p>
+    <p class="text-#888">at {{ talk.time }}</p>
   </div>
   <div class="w-35% h-1px m-auto bg-gray mt-15px mb-30px"></div>
 </template>
@@ -50,7 +49,6 @@ import dayjs from "dayjs";
 type Talk = {
   text: string;
   time: string;
-  writer: string;
 };
 
 const projectUrl = "https://fewodbtarhcyzpqsdzzd.supabase.co";
