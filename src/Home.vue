@@ -4,32 +4,23 @@
       class="i-mingcute-refresh-2-fill text-1.3rem"
       @click="getTalks"
     ></button>
-    <button
-      class="i-mingcute-pencil-fill text-1.3rem"
-      @click="writeTalk"
-    ></button>
   </nav>
   <div class="flex justify-center p-15px" v-if="loading">
     <span class="i-mingcute-loading-3-fill animate-spin text-1.2em"></span>
   </div>
-  <div v-if="writingTalk">
-    <div class="p-10px">
-      <textarea class="w-100% min-h-20vh" v-model="talkContent"></textarea>
-      <div class="flex justify-end">
-        <button
-          class="flex items-center mt-7px button mr-8px"
-          @click="cancelWritingTalk"
-        >
-          <span>Cancel</span>
-          <span
-            class="i-mingcute-add-fill rotate-45 text-1.1rem transition-160"
-          ></span>
-        </button>
-        <button class="flex items-center mt-7px button" @click="submitTalk">
-          <span>Submit</span>
-          <span class="i-mingcute-send-fill text-1.1rem ml-3px"></span>
-        </button>
-      </div>
+  <div class="p-25px mt-28px mb-18px">
+    <textarea
+      class="w-100% min-h-3.5rem text-center p-10px"
+      v-model="talkContent"
+    ></textarea>
+    <div class="flex justify-center">
+      <button
+        class="flex items-center mt-7px button pl-10px"
+        @click="submitTalk"
+      >
+        <span>Submit</span>
+        <span class="i-mingcute-send-fill ml-6px mr-3px text-1.1rem"></span>
+      </button>
     </div>
   </div>
   <div v-for="(talk, index) in talks" class="p-15px">
@@ -76,15 +67,8 @@ onMounted(() => {
   getTalks();
 });
 
-const writingTalk = ref(false);
 const talkContent = ref("");
 
-const writeTalk = () => {
-  writingTalk.value = true;
-};
-const cancelWritingTalk = () => {
-  writingTalk.value = false;
-};
 const submitTalk = async () => {
   if (talkContent.value.length > 200) {
     alert("Your talk is too long");
@@ -98,7 +82,6 @@ const submitTalk = async () => {
     alert("Request error");
     return;
   }
-  writingTalk.value = false;
   getTalks();
 };
 </script>
