@@ -14,14 +14,14 @@
       v-model="talkContent"
     ></textarea>
     <div class="text-#555 absolute left-23px top-20px border-box reminding">
-      Say something...
+      写点什么...
     </div>
     <div class="flex justify-center">
       <button
         class="flex items-center button pl-10px mt-7px"
         @click="submitTalk"
       >
-        <span>Submit</span>
+        <span>完成</span>
         <span class="i-mingcute-send-fill ml-6px mr-3px text-1.1rem"></span>
       </button>
     </div>
@@ -55,7 +55,7 @@ const getTalks = async () => {
   loading.value = true;
   const { data, error } = await client.from("talks").select();
   if (error != null) {
-    alert("Request error");
+    alert("请求错误");
   }
   talks.value = (data as Talk[]).sort((a, b) =>
     dayjs(a.time, "YYYY / MM /DD").isAfter(dayjs(b.time, "YYYY / MM / DD"))
@@ -72,8 +72,11 @@ const talkContent = ref("");
 
 const submitTalk = async () => {
   if (talkContent.value.length > 200) {
-    alert("Your talk is too long");
+    alert("Talk过长");
     return;
+  }
+  if (talkContent.value === "") {
+    alert("内容不能为空");
   }
   const { error } = await client.from("talks").insert({
     text: talkContent.value,
@@ -111,6 +114,7 @@ textarea:focus ~ div button {
   opacity: 1;
   height: auto;
   font-size: 1.03rem;
+  padding: 5px;
   padding-left: 10px;
   margin-top: 7px;
   padding-right: 7px;
@@ -118,6 +122,6 @@ textarea:focus ~ div button {
 .sticky {
   background-color: rgba(5, 5, 5, 0.3);
   backdrop-filter: blur(8px);
-  boeder-radius: 5px;
+  border-radius: 5px;
 }
 </style>

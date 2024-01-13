@@ -8,7 +8,7 @@
       @click="skipToHome"
       class="flex items-center button p-5px pl-8px pr-6px"
     >
-      <span class="text-1.3rem font-bold pt-4px pl-7px">Enter</span>
+      <span class="text-1.3rem font-bold pl-7px">进入</span>
       <span
         class="text-1.3rem i-mingcute-arrows-right-fill ml-4px mr-4px transition-160"
       ></span>
