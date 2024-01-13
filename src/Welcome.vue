@@ -8,8 +8,10 @@
       @click="skipToHome"
       class="flex items-center button p-5px pl-8px pr-6px"
     >
-      <span class="text-1.3rem font-bold">Enter</span>
-      <span class="text-1.3rem i-mingcute-right-fill transition-160"></span>
+      <span class="text-1.3rem font-bold pt-4px pl-7px">Enter</span>
+      <span
+        class="text-1.3rem i-mingcute-arrows-right-fill ml-4px mr-4px transition-160"
+      ></span>
     </button>
   </div>
 </template>
@@ -19,7 +21,12 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const words = ["Say something.", "Wander.", "Alley.", "Seventh Avenue."];
+const words = [
+  "Say something...",
+  "Wander.",
+  "In an alley.",
+  "Seventh Avenue.",
+];
 
 const sleep = async (delay: number) => {
   return new Promise((resolve, reject) => setTimeout(resolve, delay));
@@ -34,10 +41,15 @@ const typeWords = async () => {
       typer.value = words[i].slice(0, j);
       await sleep(120);
     }
+    await sleep(750);
+    for (let j = words[i].length; j >= 0; j--) {
+      typer.value = words[i].slice(0, j);
+      await sleep(35);
+    }
+    await sleep(750);
   };
   while (true) {
     await typeWord();
-    await sleep(750);
     i++;
     if (i === words.length) i = 0;
   }
@@ -50,7 +62,7 @@ const skipToHome = () => {
 };
 </script>
 <style scoped>
-button:hover .i-mingcute-right-fill {
+button:hover .i-mingcute-arrows-right-fill {
   transform: translate(5px, 0);
 }
 </style>

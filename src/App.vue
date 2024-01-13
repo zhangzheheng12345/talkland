@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-500px m-auto">
-    <div class="p-10px"><router-view></router-view></div>
+    <div class="p-15px"><router-view></router-view></div>
   </div>
 </template>
 

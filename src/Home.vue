@@ -8,14 +8,17 @@
   <div class="flex justify-center p-15px" v-if="loading">
     <span class="i-mingcute-loading-3-fill animate-spin text-1.2em"></span>
   </div>
-  <div class="p-10px mt-28px mb-18px">
+  <div class="p-10px mt-12px mb-8px relative block sticky top-15px">
     <textarea
-      class="w-100% min-h-3.5rem text-center p-10px"
+      class="w-100% min-h-3.5rem p-10px pl-13px pr-13px"
       v-model="talkContent"
     ></textarea>
+    <div class="text-#555 absolute left-23px top-20px border-box reminding">
+      Say something...
+    </div>
     <div class="flex justify-center">
       <button
-        class="flex items-center mt-7px button pl-10px"
+        class="flex items-center button pl-10px mt-7px"
         @click="submitTalk"
       >
         <span>Submit</span>
@@ -23,12 +26,10 @@
       </button>
     </div>
   </div>
-  <div v-for="(talk, index) in talks" class="p-15px">
-    <div class="w-100% h-1px bg-gray mt-15px mb-30px"></div>
-    <p class="min-h-10 vh pl-10px">{{ talk.text }}</p>
-    <p class="text-#888">at {{ talk.time }}</p>
+  <div v-for="(talk, index) in talks" class="p-15px mt-4.5rem mb-4.5rem">
+    <p class="min-h-10 vh pl-10px text-1.13rem mb-0.85rem">{{ talk.text }}</p>
+    <p class="text-#888 float-right">{{ talk.time }}</p>
   </div>
-  <div class="w-35% h-1px m-auto bg-gray mt-15px mb-30px"></div>
 </template>
 
 <script setup lang="ts">
@@ -92,5 +93,31 @@ const submitTalk = async () => {
 }
 .button:hover .i-mingcute-add-fill {
   transform: rotate(135deg);
+}
+.reminding {
+  z-index: -99;
+}
+textarea:focus ~ .reminding {
+  display: none;
+}
+textarea ~ div button {
+  opacity: 0;
+  height: 0px;
+  font-size: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+textarea:focus ~ div button {
+  opacity: 1;
+  height: auto;
+  font-size: 1.03rem;
+  padding-left: 10px;
+  margin-top: 7px;
+  padding-right: 7px;
+}
+.sticky {
+  background-color: rgba(5, 5, 5, 0.3);
+  backdrop-filter: blur(8px);
+  boeder-radius: 5px;
 }
 </style>
