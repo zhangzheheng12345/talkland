@@ -8,7 +8,7 @@
   <div class="flex justify-center p-15px" v-if="loading">
     <span class="i-mingcute-loading-3-fill animate-spin text-1.2em"></span>
   </div>
-  <div class="p-25px mt-28px mb-18px">
+  <div class="p-10px mt-28px mb-18px">
     <textarea
       class="w-100% min-h-3.5rem text-center p-10px"
       v-model="talkContent"
