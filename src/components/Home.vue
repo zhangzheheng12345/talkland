@@ -9,7 +9,7 @@
       class="i-mingcute-loading-3-fill animate-spin text-1.3rem"
       v-if="loading"
     ></span>
-    <span class="text-1.3rem mono-more ml-auto">Talkland</span>
+    <span class="text-1.3rem mono-more ml-auto font-bold">Talkland</span>
   </nav>
   <div class="p-10px mt-12px mb-8px relative block sticky top-15px">
     <textarea
@@ -38,12 +38,18 @@
     }"
   >
     <p class="min-h-10 vh pl-10px text-1.13rem mb-0.85rem">{{ talk.text }}</p>
+    <p class="flex justify-end">
+      <button class="flex mb-0.8rem border-0" @click="like(talk.id)">
+        <span class="i-mingcute-heart-half-fill mr-0.2rem"></span>
+        <span>{{ talk.likes }}</span>
+      </button>
+    </p>
     <p class="text-#888 float-right italic">{{ talk.time }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { createClient } from '@supabase/supabase-js'
+import { createClient, lockInternals } from '@supabase/supabase-js'
 import { onMounted, ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { useShowUp } from '../logics/showUp'
@@ -54,6 +60,7 @@ type Talk = {
   id: number
   text: string
   time: string
+  likes: number
 }
 
 const projectUrl = 'https://fewodbtarhcyzpqsdzzd.supabase.co'
@@ -77,6 +84,18 @@ const getTalks = async () => {
       : -1
   )
   loading.value = false
+}
+
+const like = async (id: number) => {
+  talks.value[talks.value.findIndex((x) => x.id === id)].likes += 1
+  const { error } = await client
+    .from('talks')
+    .update({ likes: talks.value.filter((x) => x.id === id)[0].likes + 1 })
+    .eq('id', id)
+  if (error != null) {
+    alert('请求错误')
+    return
+  }
 }
 
 let showUp = useShowUp(talks.value.length, 240)
