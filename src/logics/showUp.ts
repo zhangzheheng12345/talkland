@@ -1,7 +1,7 @@
-import { ref } from "vue";
+import { ref } from 'vue'
 
 export function sleep(delay: number) {
-  return new Promise((resolve) => setTimeout(resolve, delay));
+  return new Promise((resolve) => setTimeout(resolve, delay))
 }
 
 export const useShowUp = (length: number, delay: number) => {
@@ -10,10 +10,10 @@ export const useShowUp = (length: number, delay: number) => {
     translations: ref(new Array(length).fill(30)),
     translate: async function () {
       for (let i = 0; i < length; i++) {
-        this.opacities.value[i] = 1;
-        this.translations.value[i] = 0;
-        await sleep(delay);
+        this.opacities.value[i] = 1
+        this.translations.value[i] = 0
+        await sleep(delay)
       }
-    },
-  };
-};
+    }
+  }
+}

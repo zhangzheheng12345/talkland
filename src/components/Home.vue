@@ -33,7 +33,7 @@
     class="p-15px mt-4.5rem mb-4.5rem transition-460"
     :style="{
       opacity: showUp.opacities.value[index],
-      transform: `translate(0px, ${showUp.translations.value[index]})`,
+      transform: `translate(0px, ${showUp.translations.value[index]})`
     }"
   >
     <p class="min-h-10 vh pl-10px text-1.13rem mb-0.85rem">{{ talk.text }}</p>
@@ -42,73 +42,73 @@
 </template>
 
 <script setup lang="ts">
-import { createClient } from "@supabase/supabase-js";
-import { onMounted, ref } from "vue";
-import { useStorage } from "@vueuse/core";
-import { useShowUp } from "../logics/showUp";
-import { sleep } from "../logics/showUp";
-import dayjs from "dayjs";
+import { createClient } from '@supabase/supabase-js'
+import { onMounted, ref } from 'vue'
+import { useStorage } from '@vueuse/core'
+import { useShowUp } from '../logics/showUp'
+import { sleep } from '../logics/showUp'
+import dayjs from 'dayjs'
 
 type Talk = {
-  id: number;
-  text: string;
-  time: string;
-};
+  id: number
+  text: string
+  time: string
+}
 
-const projectUrl = "https://fewodbtarhcyzpqsdzzd.supabase.co";
+const projectUrl = 'https://fewodbtarhcyzpqsdzzd.supabase.co'
 const projectAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZld29kYnRhcmhjeXpwcXNkenpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMzOTMzMTUsImV4cCI6MjAxODk2OTMxNX0.9WfF0jC5H5h0vaNl6dCeJ5hdmlu4NG0sWfo4X7LPgFU";
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZld29kYnRhcmhjeXpwcXNkenpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMzOTMzMTUsImV4cCI6MjAxODk2OTMxNX0.9WfF0jC5H5h0vaNl6dCeJ5hdmlu4NG0sWfo4X7LPgFU'
 
-const client = createClient(projectUrl, projectAnonKey);
-const talks = useStorage<Array<Talk>>("talks", []);
-const loading = ref(true);
+const client = createClient(projectUrl, projectAnonKey)
+const talks = useStorage<Array<Talk>>('talks', [])
+const loading = ref(true)
 
 const getTalks = async () => {
-  loading.value = true;
-  const { data, error } = await client.from("talks").select();
+  loading.value = true
+  const { data, error } = await client.from('talks').select()
   if (error != null) {
-    alert("请求错误");
+    alert('请求错误')
   }
-  talks.value = data as Talk[];
+  talks.value = data as Talk[]
   talks.value.sort((a, b) =>
-    dayjs(a.time, "YYYY / MM / DD").isBefore(dayjs(b.time, "YYYY / MM / DD"))
+    dayjs(a.time, 'YYYY / MM / DD').isBefore(dayjs(b.time, 'YYYY / MM / DD'))
       ? 1
       : -1
-  );
-  loading.value = false;
-};
+  )
+  loading.value = false
+}
 
-let showUp = useShowUp(talks.value.length, 280);
+let showUp = useShowUp(talks.value.length, 280)
 
 onMounted(() =>
   (async () => {
-    await getTalks();
-    await sleep(120);
-    await showUp.translate();
+    await getTalks()
+    await sleep(120)
+    await showUp.translate()
   })()
-);
+)
 
-const talkContent = ref("");
+const talkContent = ref('')
 
 const submitTalk = async () => {
   if (talkContent.value.length > 200) {
-    alert("Talk过长");
-    return;
+    alert('Talk过长')
+    return
   }
   if (talkContent.value.length === 0) {
-    alert("内容不能为空");
-    return;
+    alert('内容不能为空')
+    return
   }
-  const { error } = await client.from("talks").insert({
+  const { error } = await client.from('talks').insert({
     text: talkContent.value,
-    time: dayjs().format("YYYY / MM / DD"),
-  });
+    time: dayjs().format('YYYY / MM / DD')
+  })
   if (error != null) {
-    alert("Request error");
-    return;
+    alert('Request error')
+    return
   }
-  getTalks();
-};
+  getTalks()
+}
 </script>
 
 <style scoped>

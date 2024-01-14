@@ -1,11 +1,28 @@
+:root {
+  --mono-basic: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    'WenQuanYi Micro Hei', sans-serif;
+  --mono-more: Verdana, var(--mono-basic);
+}
+
 * {
   margin: 0px;
   padding: 0px;
   background-color: transparent;
   color: #424242;
   font-size: 1.02rem;
+  font-family: var(--mono-basic);
   text-decoration: none;
   box-sizing: border-box;
+}
+
+h1,
+h12,
+h3,
+h4,
+h5,
+h6,
+strong {
+  font-family: var(--mono-more);
 }
 
 body {
