@@ -19,10 +19,7 @@
       写点什么...
     </div>
     <div class="flex justify-center">
-      <button
-        class="flex items-center button pl-10px mt-7px"
-        @click="submitTalk"
-      >
+      <button class="items-center button pl-10px mt-7px" @click="submitTalk">
         <span>完成</span>
         <span class="i-mingcute-send-fill ml-6px mr-3px text-1.1rem"></span>
       </button>
@@ -69,7 +66,6 @@ const getTalks = async () => {
   if (error != null) {
     alert("请求错误");
   }
-  console.log(data);
   talks.value = data as Talk[];
   talks.value.sort((a, b) =>
     dayjs(a.time, "YYYY / MM / DD").isBefore(dayjs(b.time, "YYYY / MM / DD"))
@@ -80,16 +76,14 @@ const getTalks = async () => {
 };
 
 let showUp = useShowUp(talks.value.length, 280);
+
 onMounted(() =>
   (async () => {
+    await getTalks();
     await sleep(120);
-    showUp.translate();
+    await showUp.translate();
   })()
 );
-
-onMounted(async () => {
-  await getTalks();
-});
 
 const talkContent = ref("");
 
@@ -98,8 +92,9 @@ const submitTalk = async () => {
     alert("Talk过长");
     return;
   }
-  if (talkContent.value === "") {
+  if (talkContent.value.length === 0) {
     alert("内容不能为空");
+    return;
   }
   const { error } = await client.from("talks").insert({
     text: talkContent.value,
@@ -127,20 +122,10 @@ textarea:focus ~ .reminding {
   display: none;
 }
 textarea ~ div button {
-  opacity: 0;
-  height: 0px;
-  font-size: 0px;
-  margin: 0px;
-  padding: 0px;
+  display: none;
 }
 textarea:focus ~ div button {
-  opacity: 1;
-  height: auto;
-  font-size: 1.03rem;
-  padding: 5px;
-  padding-left: 10px;
-  margin-top: 7px;
-  padding-right: 7px;
+  display: flex;
 }
 .sticky {
   background-color: rgba(5, 5, 5, 0.3);

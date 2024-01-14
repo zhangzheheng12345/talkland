@@ -10,7 +10,7 @@
       Talkland
     </h1>
     <p class="m-1.5rem text-1.2rem mb-25vh h-3rem text-center text-#555">
-      {{ typer }}
+      {{ typer.typer.value }}
     </p>
     <button
       @click="skipToHome"
@@ -30,42 +30,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { sleep, useShowUp } from "./showUp";
+import { useShowUp } from "./showUp";
+import { useTyper } from "./typer";
 
 const router = useRouter();
 
-const words = [
-  "Say something...",
-  "Wander.",
-  "In an alley.",
-  "Seventh Avenue.",
-];
+const typer = useTyper(0);
 
-const typer = ref("");
-
-const typeWords = async () => {
-  await sleep(500);
-  let i = 0;
-  const typeWord = async () => {
-    for (let j = 0; j <= words[i].length; j++) {
-      typer.value = words[i].slice(0, j);
-      await sleep(120);
-    }
-    await sleep(750);
-    for (let j = words[i].length; j >= 0; j--) {
-      typer.value = words[i].slice(0, j);
-      await sleep(35);
-    }
-    await sleep(750);
-  };
-  while (true) {
-    await typeWord();
-    i++;
-    if (i === words.length) i = 0;
-  }
-};
-
-onMounted(typeWords);
+onMounted(() => typer.typeWords());
 
 const skipToHome = () => {
   router.push("/home");
