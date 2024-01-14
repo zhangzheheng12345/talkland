@@ -21,7 +21,8 @@ h3,
 h4,
 h5,
 h6,
-strong {
+strong,
+.mono-more {
   font-family: var(--mono-more);
 }
 

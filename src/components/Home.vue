@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-center mt-17px p-7px">
+  <nav class="flex items-center justify-strecth mt-17px p-7px mb-1.6rem">
     <button
       class="i-mingcute-refresh-2-fill text-1.3rem"
       v-if="!loading"
@@ -9,6 +9,7 @@
       class="i-mingcute-loading-3-fill animate-spin text-1.3rem"
       v-if="loading"
     ></span>
+    <span class="text-1.3rem mono-more ml-auto">Talkland</span>
   </nav>
   <div class="p-10px mt-12px mb-8px relative block sticky top-15px">
     <textarea
@@ -30,14 +31,14 @@
   </div>
   <div
     v-for="(talk, index) in talks"
-    class="p-15px mt-4.5rem mb-4.5rem transition-460"
+    class="p-15px mt-4.5rem mb-4.5rem transition-360"
     :style="{
       opacity: showUp.opacities.value[index],
       transform: `translate(0px, ${showUp.translations.value[index]})`
     }"
   >
     <p class="min-h-10 vh pl-10px text-1.13rem mb-0.85rem">{{ talk.text }}</p>
-    <p class="text-#888 float-right">{{ talk.time }}</p>
+    <p class="text-#888 float-right italic">{{ talk.time }}</p>
   </div>
 </template>
 
@@ -78,7 +79,7 @@ const getTalks = async () => {
   loading.value = false
 }
 
-let showUp = useShowUp(talks.value.length, 280)
+let showUp = useShowUp(talks.value.length, 240)
 
 onMounted(() =>
   (async () => {
@@ -134,5 +135,9 @@ textarea:focus ~ div button {
   background-color: rgba(234, 234, 234, 0.2);
   backdrop-filter: blur(4px);
   border-radius: 8px;
+}
+.mono-more {
+  border-bottom: 2px solid #424242;
+  padding-bottom: 4px;
 }
 </style>
