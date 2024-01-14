@@ -12,14 +12,17 @@
   </nav>
   <div class="p-10px mt-12px mb-8px relative block sticky top-15px">
     <textarea
-      class="w-100% min-h-3.5rem p-10px pl-13px pr-13px"
+      class="w-100% min-h-3.5rem p-10px pl-13px pr-13px focus:shadow-lg transition-160"
       v-model="talkContent"
     ></textarea>
-    <div class="text-#555 absolute left-23px top-20px border-box reminding">
+    <div class="text-#8a8a8a absolute left-23px top-20px border-box reminding">
       写点什么...
     </div>
     <div class="flex justify-center">
-      <button class="items-center button pl-10px mt-7px" @click="submitTalk">
+      <button
+        class="items-center button pl-10px mt-7px shadow-lg"
+        @click="submitTalk"
+      >
         <span>完成</span>
         <span class="i-mingcute-send-fill ml-6px mr-3px text-1.1rem"></span>
       </button>
@@ -42,8 +45,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { onMounted, ref } from "vue";
 import { useStorage } from "@vueuse/core";
-import { useShowUp } from "./showUp";
-import { sleep } from "./showUp";
+import { useShowUp } from "../logics/showUp";
+import { sleep } from "../logics/showUp";
 import dayjs from "dayjs";
 
 type Talk = {
@@ -128,8 +131,8 @@ textarea:focus ~ div button {
   display: flex;
 }
 .sticky {
-  background-color: rgba(5, 5, 5, 0.3);
-  backdrop-filter: blur(8px);
-  border-radius: 5px;
+  background-color: rgba(234, 234, 234, 0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
 }
 </style>

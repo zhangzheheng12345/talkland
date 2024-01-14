@@ -5,8 +5,8 @@ import App from "./App.vue";
 import "./global.css";
 import "uno.css";
 
-import Welcome from "./Welcome.vue";
-import Home from "./Home.vue";
+import Welcome from "./components/Welcome.vue";
+import Home from "./components/Home.vue";
 
 const routes = [
   { path: "/", component: Welcome },

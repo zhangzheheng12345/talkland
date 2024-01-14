@@ -9,7 +9,7 @@
     >
       Talkland
     </h1>
-    <p class="m-1.5rem text-1.2rem mb-25vh h-3rem text-center text-#555">
+    <p class="m-1.5rem text-1.2rem mb-25vh h-3rem text-center text-#8a8a8a">
       {{ typer.typer.value }}
     </p>
     <button
@@ -30,8 +30,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useShowUp } from "./showUp";
-import { useTyper } from "./typer";
+import { useShowUp } from "../logics/showUp";
+import { useTyper } from "../logics/typer";
 
 const router = useRouter();
 
@@ -51,3 +51,4 @@ button:hover .i-mingcute-arrows-right-fill {
   transform: translate(5px, 0);
 }
 </style>
+./logics/showUp ./logics/typer
