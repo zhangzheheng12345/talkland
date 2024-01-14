@@ -22,7 +22,7 @@
     <div class="flex justify-center">
       <button
         class="items-center button pl-10px mt-7px shadow-lg"
-        @click="submitTalk"
+        @mousedown="submitTalk"
       >
         <span>完成</span>
         <span class="i-mingcute-send-fill ml-6px mr-3px text-1.1rem"></span>
@@ -111,23 +111,21 @@ onMounted(() =>
 const talkContent = ref('')
 
 const submitTalk = async () => {
+  const content = talkContent.value
+  talkContent.value = ''
   if (talkContent.value.length > 200) {
     alert('Talk过长')
     return
   }
-  if (talkContent.value.length === 0) {
-    alert('内容不能为空')
-    return
-  }
   const { error } = await client.from('talks').insert({
-    text: talkContent.value,
+    text: content,
     time: dayjs().format('YYYY / MM / DD')
   })
   if (error != null) {
     alert('Request error')
     return
   }
-  getTalks()
+  await getTalks()
 }
 </script>
 
