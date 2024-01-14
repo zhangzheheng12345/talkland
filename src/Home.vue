@@ -39,6 +39,7 @@ import { useStorage } from "@vueuse/core";
 import dayjs from "dayjs";
 
 type Talk = {
+  id: number;
   text: string;
   time: string;
 };
@@ -57,10 +58,12 @@ const getTalks = async () => {
   if (error != null) {
     alert("请求错误");
   }
-  talks.value = (data as Talk[]).sort((a, b) =>
-    dayjs(a.time, "YYYY / MM /DD").isAfter(dayjs(b.time, "YYYY / MM / DD"))
+  console.log(data);
+  talks.value = data as Talk[];
+  talks.value.sort((a, b) =>
+    dayjs(a.time, "YYYY / MM / DD").isBefore(dayjs(b.time, "YYYY / MM / DD"))
       ? 1
-      : 0
+      : -1
   );
   loading.value = false;
 };
