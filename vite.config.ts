@@ -13,6 +13,13 @@ export default defineConfig({
   plugins: [
     vue(),
     Unocss({
+      theme: {
+        colors: {
+          deepGray: 'var(--deep-gray)',
+          midGray: 'var(--mid-gray)',
+          lightGray: 'var(--light-gray)'
+        }
+      },
       presets: [
         presetUno({
           dark: 'class'

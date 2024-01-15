@@ -1,14 +1,14 @@
 <template>
   <nav class="flex items-center justify-strecth mt-17px p-7px mb-1.6rem">
-    <button
-      class="i-mingcute-refresh-2-fill text-1.3rem"
-      v-if="!loading"
-      @click="getTalks"
-    ></button>
     <span
       class="i-mingcute-loading-3-fill animate-spin text-1.3rem"
       v-if="loading"
-    ></span>
+    ></span
+    ><button
+      class="i-mingcute-refresh-2-fill text-1.3rem"
+      v-else
+      @click="getTalks"
+    ></button>
     <span class="text-1.3rem mono-more ml-auto font-bold">Talkland</span>
   </nav>
   <div class="p-10px mt-12px mb-8px relative block sticky top-15px">
@@ -40,8 +40,15 @@
     <p class="min-h-10 vh pl-10px text-1.13rem mb-0.85rem">{{ talk.text }}</p>
     <p class="flex justify-end">
       <button class="flex mb-0.8rem border-0" @click="like(talk.id)">
-        <span class="i-mingcute-heart-half-fill mr-0.2rem"></span>
-        <span>{{ talk.likes }}</span>
+        <span
+          class="i-mingcute-heart-fill mr-0.2rem text-mid-gray"
+          v-if="liked.find((x) => x === talk.id)"
+        ></span>
+        <span
+          class="i-mingcute-heart-line mr-0.2rem text-mid-gray"
+          v-else
+        ></span>
+        <span class="text-mid-gray">{{ talk.likes }}</span>
       </button>
     </p>
     <p class="text-#888 float-right italic">{{ talk.time }}</p>
@@ -105,11 +112,20 @@ const submitTalk = async () => {
   await getTalks()
 }
 
+const liked = useStorage<number[]>('likes', [])
 const like = async (id: number) => {
   talks.value[talks.value.findIndex((x) => x.id === id)].likes += 1
+  let delta = 0
+  if (liked.value.find((x) => x === id)) {
+    delta = -1
+    liked.value = liked.value.filter((x) => x !== id)
+  } else {
+    delta = 1
+    liked.value.push(id)
+  }
   const { error } = await client
     .from('talks')
-    .update({ likes: talks.value.filter((x) => x.id === id)[0].likes + 1 })
+    .update({ likes: talks.value.filter((x) => x.id === id)[0].likes + delta })
     .eq('id', id)
   if (error != null) {
     alert('请求错误')
@@ -154,7 +170,7 @@ textarea:focus ~ div button {
   border-radius: 8px;
 }
 .mono-more {
-  border-bottom: 2px solid #424242;
+  border-bottom: 2px solid var(--deep-gray);
   padding-bottom: 4px;
 }
 </style>
