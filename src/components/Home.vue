@@ -86,30 +86,7 @@ const getTalks = async () => {
   loading.value = false
 }
 
-const like = async (id: number) => {
-  talks.value[talks.value.findIndex((x) => x.id === id)].likes += 1
-  const { error } = await client
-    .from('talks')
-    .update({ likes: talks.value.filter((x) => x.id === id)[0].likes + 1 })
-    .eq('id', id)
-  if (error != null) {
-    alert('请求错误')
-    return
-  }
-}
-
-let showUp = useShowUp(talks.value.length, 240)
-
-onMounted(() =>
-  (async () => {
-    await getTalks()
-    await sleep(120)
-    await showUp.translate()
-  })()
-)
-
 const talkContent = ref('')
-
 const submitTalk = async () => {
   const content = talkContent.value
   talkContent.value = ''
@@ -127,6 +104,29 @@ const submitTalk = async () => {
   }
   await getTalks()
 }
+
+const like = async (id: number) => {
+  talks.value[talks.value.findIndex((x) => x.id === id)].likes += 1
+  const { error } = await client
+    .from('talks')
+    .update({ likes: talks.value.filter((x) => x.id === id)[0].likes + 1 })
+    .eq('id', id)
+  if (error != null) {
+    alert('请求错误')
+    return
+  }
+}
+
+const showUp = useShowUp(talks.value.length, 240)
+
+onMounted(() =>
+  (async () => {
+    await getTalks()
+    showUp.setLength(talks.value.length)
+    await sleep(120)
+    await showUp.translate()
+  })()
+)
 </script>
 
 <style scoped>

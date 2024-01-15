@@ -8,6 +8,10 @@ export const useShowUp = (length: number, delay: number) => {
   return {
     opacities: ref(new Array(length).fill(0)),
     translations: ref(new Array(length).fill(30)),
+    setLength: function (length: number) {
+      this.opacities.value = new Array(length).fill(0)
+      this.translations.value = new Array(length).fill(30)
+    },
     translate: async function () {
       for (let i = 0; i < length; i++) {
         this.opacities.value[i] = 1
