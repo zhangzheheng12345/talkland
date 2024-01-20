@@ -72,10 +72,12 @@
 import { createClient } from '@supabase/supabase-js'
 import { onMounted, ref } from 'vue'
 import { useStorage } from '@vueuse/core'
-import { useShowUp } from '../logics/showUp'
-import { sleep } from '../logics/showUp'
 import { useRouter } from 'vue-router'
 import dayjs from 'dayjs'
+
+import { useShowUp } from '@/logics/showUp'
+import { sleep } from '@/logics/showUp'
+import { projectDBUrl, projectDBAnonKey, projectDBTableName } from '@/config'
 
 type Talk = {
   id: number
@@ -84,17 +86,13 @@ type Talk = {
   likes: number
 }
 
-const projectUrl = 'https://fewodbtarhcyzpqsdzzd.supabase.co'
-const projectAnonKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZld29kYnRhcmhjeXpwcXNkenpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMzOTMzMTUsImV4cCI6MjAxODk2OTMxNX0.9WfF0jC5H5h0vaNl6dCeJ5hdmlu4NG0sWfo4X7LPgFU'
-
-const client = createClient(projectUrl, projectAnonKey)
-const talks = useStorage<Array<Talk>>('talks', [])
+const client = createClient(projectDBUrl, projectDBAnonKey)
+const talks = useStorage<Array<Talk>>(projectDBTableName, [])
 const loading = ref(true)
 
 const getTalks = async () => {
   loading.value = true
-  const { data, error } = await client.from('talks').select()
+  const { data, error } = await client.from(projectDBTableName).select()
   if (error != null) {
     alert('请求错误')
   }
@@ -115,7 +113,7 @@ const submitTalk = async () => {
     alert('Talk过长')
     return
   }
-  const { error } = await client.from('talks').insert({
+  const { error } = await client.from(projectDBTableName).insert({
     text: content,
     time: dayjs().format('YYYY / MM / DD')
   })
@@ -138,7 +136,7 @@ const like = async (id: number) => {
   }
   talks.value[talks.value.findIndex((x) => x.id === id)].likes += delta
   const { error } = await client
-    .from('talks')
+    .from(projectDBTableName)
     .update({ likes: talks.value.filter((x) => x.id === id)[0].likes })
     .eq('id', id)
   if (error != null) {
