@@ -7,19 +7,24 @@
   --deep-gray: #3f3f3f;
   --mid-gray: #656565;
   --light-gray: #efefef;
-  --my-blue: #2981a3;
+  --my-blue: #1d6380;
   --my-red: #db4a5d;
+}
+:root {
+  color: var(--deep-gray);
+  font-size: 1.02rem;
+  font-family: var(--mono-basic);
 }
 
 * {
   margin: 0px;
   padding: 0px;
   background-color: transparent;
-  color: var(--deep-gray);
-  font-size: 1.02rem;
-  font-family: var(--mono-basic);
   text-decoration: none;
   box-sizing: border-box;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
 }
 
 h1,

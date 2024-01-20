@@ -13,6 +13,7 @@ export const useShowUp = (length: number, delay: number) => {
       this.translations.value = new Array(length).fill(30)
     },
     translate: async function () {
+      await sleep(500)
       for (let i = 0; i < length; i++) {
         this.opacities.value[i] = 1
         this.translations.value[i] = 0

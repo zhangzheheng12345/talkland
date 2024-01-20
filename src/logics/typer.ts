@@ -14,12 +14,12 @@ export const useTyper = () => {
           this.typer.value = words[i].slice(0, j)
           await sleep(90)
         }
-        await sleep(750)
+        await sleep(1500)
         for (let j = words[i].length; j >= 0; j--) {
           this.typer.value = words[i].slice(0, j)
           await sleep(45)
         }
-        await sleep(2100)
+        await sleep(750)
       }
       while (true) {
         await typeWord()

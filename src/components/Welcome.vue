@@ -26,17 +26,26 @@
       ></span>
     </button>
     <button
-      @click="skipToGitHub"
-      class="flex items-center button p-4px pl-7px pr-5px transition-160 mt-1rem hover:shadow-lg"
+      @click="skipToNoticeBoard"
+      class="flex items-center button p-4px pl-7px pr-5px transition-160 mt-2rem hover:shadow-lg text-1.2rem"
       :style="{
         opacity: showUp.opacities.value[2],
         transform: `translate(0px, ${showUp.translations.value[2]}px)`
       }"
     >
-      <span class="text-1.2rem font-bold pl-5px">GitHub</span>
-      <span
-        class="text-1.2rem i-mingcute-github-line ml-3px mr-2px transition-140"
-      ></span>
+      <span class="font-bold pl-5px">公告牌</span>
+      <span class="i-mingcute-right-fill transition-160"></span>
+    </button>
+    <button
+      @click="skipToGitHub"
+      class="flex items-center button p-4px pl-7px pr-5px transition-160 mt-0.7rem hover:shadow-lg text-1.2rem"
+      :style="{
+        opacity: showUp.opacities.value[3],
+        transform: `translate(0px, ${showUp.translations.value[3]}px)`
+      }"
+    >
+      <span class="font-bold pl-5px">GitHub</span>
+      <span class="i-mingcute-github-line ml-3px mr-2px transition-140"></span>
     </button>
   </div>
 </template>
@@ -51,24 +60,32 @@ import { projectLink } from '@/config'
 const router = useRouter()
 
 const typer = useTyper()
-
 onMounted(() => typer.typeWords())
 
 const skipToHome = () => {
   router.push('/home')
 }
+const skipToNoticeBoard = () => {
+  router.push('/notice-board')
+}
 const skipToGitHub = () => {
   window.open(projectLink)
 }
 
-const showUp = useShowUp(3, 360)
+const showUp = useShowUp(4, 360)
 onMounted(() => showUp.translate())
 </script>
 <style scoped>
 button:hover .i-mingcute-arrows-right-fill {
   transform: translate(5px, 0);
+  color: var(--my-blue);
+}
+button:hover .i-mingcute-right-fill {
+  transform: translate(3px, 0);
+  color: var(--my-blue);
 }
 button:hover .i-mingcute-github-line {
   transform: translate(0, -1px);
+  color: var(--my-blue);
 }
 </style>

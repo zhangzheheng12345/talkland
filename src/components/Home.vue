@@ -26,7 +26,7 @@
     </div>
     <div class="flex justify-center">
       <button
-        class="items-center button pl-10px mt-7px shadow-lg"
+        class="items-center button pl-10px mt-7px shadow-lg font-bold ml-4px"
         @mousedown="submitTalk"
       >
         <span>完成</span>
@@ -38,10 +38,10 @@
   </div>
   <div
     v-for="(talk, index) in talks"
-    class="p-15px mt-4.5rem mb-4.5rem transition-360"
+    class="p-15px mt-4.5rem mb-4.5rem transition-400"
     :style="{
       opacity: showUp.opacities.value[index],
-      transform: `translate(0px, ${showUp.translations.value[index]})`
+      transform: `translate(0px, ${showUp.translations.value[index]}px)`
     }"
   >
     <p class="text-mid-gray text-1.2rem m-8px ml-5px">
