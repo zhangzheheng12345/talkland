@@ -17,7 +17,9 @@ export default defineConfig({
         colors: {
           deepGray: 'var(--deep-gray)',
           midGray: 'var(--mid-gray)',
-          lightGray: 'var(--light-gray)'
+          lightGray: 'var(--light-gray)',
+          myBlue: 'var(--my-blue)',
+          myRed: 'var(--my-red)'
         }
       },
       presets: [

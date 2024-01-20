@@ -1,20 +1,12 @@
 import { ref } from 'vue'
 import { sleep } from './showUp'
 
+const words = ['写点什么。', '漫游。', '北京胡同。', '第五和第七大道。']
+
 export const useTyper = () => {
   return {
     typer: ref(''),
     typeWords: async function () {
-      const words = [
-        '写点什么。',
-        '漫游，',
-        '北京胡同。',
-        '第五和第七大道。',
-        '我们花了很久',
-        '学会说话，',
-        '又花了一些时间',
-        '学会保持缄默。'
-      ]
       await sleep(500)
       let i = 0
       const typeWord = async () => {

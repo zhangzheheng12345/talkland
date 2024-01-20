@@ -9,7 +9,12 @@
       v-else
       @click="getTalks"
     ></button>
-    <span class="text-1.3rem mono-more ml-auto font-bold">Talkland</span>
+    <button
+      @click="toWelcomePage"
+      class="text-1.4rem mono-more ml-auto font-bold title_"
+    >
+      Talkland
+    </button>
   </nav>
   <div class="p-10px mt-12px mb-8px relative block sticky top-15px">
     <textarea
@@ -25,7 +30,9 @@
         @mousedown="submitTalk"
       >
         <span>完成</span>
-        <span class="i-mingcute-send-fill ml-6px mr-3px text-1.1rem"></span>
+        <span
+          class="i-mingcute-send-fill ml-6px mr-3px text-1.1rem text-my-blue"
+        ></span>
       </button>
     </div>
   </div>
@@ -37,18 +44,24 @@
       transform: `translate(0px, ${showUp.translations.value[index]})`
     }"
   >
+    <p class="text-mid-gray text-1.2rem m-8px ml-5px">
+      <span class="font-bold text-1.3rem text-mid-gray">#</span>
+      {{ talk.id }}
+    </p>
     <p class="min-h-10 vh pl-10px text-1.13rem mb-0.85rem">{{ talk.text }}</p>
     <p class="flex justify-end">
       <button class="flex mb-0.8rem border-0" @click="like(talk.id)">
         <span
-          class="i-mingcute-heart-fill mr-0.2rem text-mid-gray"
+          class="i-mingcute-heart-fill mr-0.2rem text-my-red hover:translate-y--3px transition-50"
           v-if="liked.find((x) => x === talk.id)"
         ></span>
         <span
-          class="i-mingcute-heart-line mr-0.2rem text-mid-gray"
+          class="i-mingcute-heart-line mr-0.2rem text-mid-gray hover:translate-y--3px transition-50 hover:text-my-red op-80"
           v-else
         ></span>
-        <span class="text-mid-gray">{{ talk.likes }}</span>
+        <span>
+          {{ talk.likes }}
+        </span>
       </button>
     </p>
     <p class="text-#888 float-right italic">{{ talk.time }}</p>
@@ -56,11 +69,12 @@
 </template>
 
 <script setup lang="ts">
-import { createClient, lockInternals } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 import { onMounted, ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { useShowUp } from '../logics/showUp'
 import { sleep } from '../logics/showUp'
+import { useRouter } from 'vue-router'
 import dayjs from 'dayjs'
 
 type Talk = {
@@ -143,6 +157,12 @@ onMounted(() =>
     await showUp.translate()
   })()
 )
+
+const router = useRouter()
+
+const toWelcomePage = () => {
+  router.push('/')
+}
 </script>
 
 <style scoped>
@@ -169,7 +189,8 @@ textarea:focus ~ div button {
   backdrop-filter: blur(4px);
   border-radius: 8px;
 }
-.mono-more {
+.title_ {
+  border-width: 0px;
   border-bottom: 2px solid var(--deep-gray);
   padding-bottom: 4px;
 }

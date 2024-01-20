@@ -1,12 +1,14 @@
 :root {
   /* Font Families */
-  --mono-basic: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
-    'WenQuanYi Micro Hei', sans-serif;
+  --mono-basic: 'Noto Sans', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
   --mono-more: Verdana, var(--mono-basic);
   /* Colors */
   --deep-gray: #424242;
   --mid-gray: #656565;
   --light-gray: #efefef;
+  --my-blue: #2981a3;
+  --my-red: #db4a5d;
 }
 
 * {
@@ -21,7 +23,7 @@
 }
 
 h1,
-h12,
+h2,
 h3,
 h4,
 h5,
