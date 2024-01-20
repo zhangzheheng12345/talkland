@@ -128,7 +128,6 @@ const submitTalk = async () => {
 
 const liked = useStorage<number[]>('likes', [])
 const like = async (id: number) => {
-  talks.value[talks.value.findIndex((x) => x.id === id)].likes += 1
   let delta = 0
   if (liked.value.find((x) => x === id)) {
     delta = -1
@@ -137,9 +136,10 @@ const like = async (id: number) => {
     delta = 1
     liked.value.push(id)
   }
+  talks.value[talks.value.findIndex((x) => x.id === id)].likes += delta
   const { error } = await client
     .from('talks')
-    .update({ likes: talks.value.filter((x) => x.id === id)[0].likes + delta })
+    .update({ likes: talks.value.filter((x) => x.id === id)[0].likes })
     .eq('id', id)
   if (error != null) {
     alert('请求错误')
