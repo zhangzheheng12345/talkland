@@ -14,7 +14,7 @@
     </p>
     <button
       @click="skipToHome"
-      class="flex items-center button p-5px pl-8px pr-6px transition-140"
+      class="flex items-center button p-5px pl-8px pr-6px transition-140 hover:shadow-lg"
       :style="{
         opacity: showUp.opacities.value[1],
         transform: `translate(0px, ${showUp.translations.value[1]}px)`
@@ -23,6 +23,19 @@
       <span class="text-1.3rem font-bold pl-7px">进入</span>
       <span
         class="text-1.3rem i-mingcute-arrows-right-fill ml-4px mr-4px transition-160"
+      ></span>
+    </button>
+    <button
+      @click="skipToGitHub"
+      class="flex items-center button p-4px pl-7px pr-5px transition-140 mt-1rem hover:shadow-lg"
+      :style="{
+        opacity: showUp.opacities.value[2],
+        transform: `translate(0px, ${showUp.translations.value[2]}px)`
+      }"
+    >
+      <span class="text-1.2rem font-bold pl-5px">GitHub</span>
+      <span
+        class="text-1.2rem i-mingcute-github-line ml-3px mr-2px transition-140"
       ></span>
     </button>
   </div>
@@ -42,12 +55,18 @@ onMounted(() => typer.typeWords())
 const skipToHome = () => {
   router.push('/home')
 }
+const skipToGitHub = () => {
+  window.open('https://github.com/zhangzheheng12345/talkland')
+}
 
-const showUp = useShowUp(2, 360)
+const showUp = useShowUp(3, 240)
 onMounted(() => showUp.translate())
 </script>
 <style scoped>
 button:hover .i-mingcute-arrows-right-fill {
   transform: translate(5px, 0);
+}
+button:hover .i-mingcute-github-line {
+  transform: translate(0, -2px);
 }
 </style>

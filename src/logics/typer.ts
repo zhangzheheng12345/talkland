@@ -7,7 +7,7 @@ export const useTyper = () => {
   return {
     typer: ref(''),
     typeWords: async function () {
-      await sleep(500)
+      await sleep(600)
       let i = 0
       const typeWord = async () => {
         for (let j = 0; j <= words[i].length; j++) {
@@ -19,7 +19,7 @@ export const useTyper = () => {
           this.typer.value = words[i].slice(0, j)
           await sleep(45)
         }
-        await sleep(700)
+        await sleep(2100)
       }
       while (true) {
         await typeWord()
