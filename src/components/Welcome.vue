@@ -38,7 +38,7 @@
     </button>
     <button
       @click="skipToGitHub"
-      class="flex items-center button p-4px pl-7px pr-5px transition-160 mt-0.7rem hover:shadow-lg text-1.2rem"
+      class="flex items-center button p-4px pl-7px pr-5px transition-160 mt-0.7rem text-1.2rem"
       :style="{
         opacity: showUp.opacities.value[3],
         transform: `translate(0px, ${showUp.translations.value[3]}px)`
@@ -53,7 +53,7 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { useShowUp } from '@/logics/showUp'
+import { useShowUp, sleep } from '@/logics/showUp'
 import { useTyper } from '@/logics/typer'
 import { projectLink } from '@/config'
 
@@ -62,13 +62,16 @@ const router = useRouter()
 const typer = useTyper()
 onMounted(() => typer.typeWords())
 
-const skipToHome = () => {
+const skipToHome = async () => {
+  await sleep(160)
   router.push('/home')
 }
-const skipToNoticeBoard = () => {
+const skipToNoticeBoard = async () => {
+  await sleep(160)
   router.push('/notice-board')
 }
-const skipToGitHub = () => {
+const skipToGitHub = async () => {
+  await sleep(160)
   window.open(projectLink)
 }
 
@@ -84,8 +87,34 @@ button:hover .i-mingcute-right-fill {
   transform: translate(3px, 0);
   color: var(--my-blue);
 }
-button:hover .i-mingcute-github-line {
-  transform: translate(0, -1px);
-  color: var(--my-blue);
+@media (any-hover: hover) or (hover: hover) {
+  button:hover .i-mingcute-github-line {
+    transform: translate(0, -1px);
+    color: var(--my-blue);
+  }
+  button:has(.i-mingcute-github-line):hover {
+    /* Copied from the default generation of shadow-lg in UnoCSS*/
+    --un-shadow: var(--un-shadow-inset) 0 10px 15px -3px var(--un-shadow-color, rgb(0
+              0 0 / 0.1)),
+      var(--un-shadow-inset) 0 4px 6px -4px var(--un-shadow-color, rgb(0 0 0 /
+              0.1));
+    box-shadow: var(--un-ring-offset-shadow), var(--un-ring-shadow),
+      var(--un-shadow);
+  }
+}
+@media (any-hover: none) or (hover: none) {
+  button:active .i-mingcute-github-line {
+    transform: translate(0, -1px);
+    color: var(--my-blue);
+  }
+  button:has(.i-mingcute-github-line):active {
+    /* Copied from the default generation of shadow-lg in UnoCSS*/
+    --un-shadow: var(--un-shadow-inset) 0 10px 15px -3px var(--un-shadow-color, rgb(0
+              0 0 / 0.1)),
+      var(--un-shadow-inset) 0 4px 6px -4px var(--un-shadow-color, rgb(0 0 0 /
+              0.1));
+    box-shadow: var(--un-ring-offset-shadow), var(--un-ring-shadow),
+      var(--un-shadow);
+  }
 }
 </style>

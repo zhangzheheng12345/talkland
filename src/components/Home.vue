@@ -11,13 +11,13 @@
       v-if="loading"
     ></span
     ><button
-      class="i-mingcute-refresh-2-fill text-1.3rem"
+      class="i-mingcute-refresh-2-fill text-1.3rem hover:rotate-60 transition-160"
       v-else
       @click="getTalks"
     ></button>
     <button
       @click="toWelcomePage"
-      class="text-1.4rem mono-more ml-auto font-bold title_"
+      class="text-1.4rem mono-more ml-auto font-bold title_ hover:translate-y--3px transition-160"
     >
       Talkland
     </button>
@@ -170,7 +170,8 @@ onMounted(() =>
 
 const router = useRouter()
 
-const toWelcomePage = () => {
+const toWelcomePage = async () => {
+  await sleep(160)
   router.push('/')
 }
 </script>
@@ -195,17 +196,17 @@ textarea:focus ~ div button {
   display: flex;
 }
 /* mobile friendly :hover */
-@media (any-hover: hover) {
-  .like:hover {
+@media (any-hover: hover) or (hover: hover) {
+  button:hover .like {
     transform: translate(0, -3px);
   }
-  .i-mingcute-heart-line:hover {
+  button:hover .i-mingcute-heart-line {
     opacity: 0.8;
     color: var(--my-red);
   }
 }
-@media (any-hover: none) {
-  .like:active {
+@media (any-hover: none) or (hover: hover) {
+  button:active .like {
     transform: translate(0, -3px);
   }
 }
