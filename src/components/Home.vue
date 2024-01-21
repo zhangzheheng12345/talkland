@@ -33,7 +33,10 @@
       class="w-100% min-h-3.5rem p-10px pl-13px pr-13px focus:shadow-lg transition-160"
       v-model="talkContent"
     ></textarea>
-    <div class="text-#8a8a8a absolute left-23px top-20px border-box reminding">
+    <div
+      class="text-#8a8a8a absolute left-23px top-20px border-box reminding"
+      v-if="talkContent.length === 0"
+    >
       写点什么...
     </div>
     <div class="flex justify-center">
@@ -99,7 +102,7 @@ type Talk = {
 }
 
 const client = createClient(projectDBUrl, projectDBAnonKey)
-const talks = useStorage<Array<Talk>>(projectDBTableName, [])
+const talks = useStorage<Array<Talk>>('talks', [])
 const loading = ref(true)
 
 const getTalks = async () => {
@@ -117,7 +120,7 @@ const getTalks = async () => {
   loading.value = false
 }
 
-const talkContent = ref('')
+const talkContent = useStorage('talk-draft', '')
 const submitTalk = async () => {
   const content = talkContent.value
   talkContent.value = ''
