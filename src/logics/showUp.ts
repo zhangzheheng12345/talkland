@@ -6,15 +6,17 @@ export function sleep(delay: number) {
 
 export const useShowUp = (length: number, delay: number) => {
   return {
+    length,
     opacities: ref(new Array(length).fill(0)),
     translations: ref(new Array(length).fill(30)),
     setLength: function (length: number) {
+      this.length = length
       this.opacities.value = new Array(length).fill(0)
       this.translations.value = new Array(length).fill(30)
     },
     translate: async function () {
       await sleep(500)
-      for (let i = 0; i < length; i++) {
+      for (let i = 0; i < this.length; i++) {
         this.opacities.value[i] = 1
         this.translations.value[i] = 0
         await sleep(delay)

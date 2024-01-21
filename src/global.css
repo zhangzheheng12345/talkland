@@ -10,6 +10,7 @@
   --my-blue: #1d6380;
   --my-red: #db4a5d;
 }
+
 :root {
   color: var(--deep-gray);
   font-size: 1.02rem;
@@ -25,6 +26,7 @@
   color: inherit;
   font-size: inherit;
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1,

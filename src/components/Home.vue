@@ -1,5 +1,11 @@
 <template>
-  <nav class="flex items-center justify-strecth mt-17px p-7px mb-1.6rem">
+  <nav
+    class="flex items-center justify-strecth mt-17px p-7px mb-1.6rem transition-400"
+    :style="{
+      opacity: showUp.opacities.value[0],
+      transform: `translate(0px, ${showUp.translations.value[0]}px)`
+    }"
+  >
     <span
       class="i-mingcute-loading-3-fill animate-spin text-1.3rem"
       v-if="loading"
@@ -16,7 +22,13 @@
       Talkland
     </button>
   </nav>
-  <div class="p-10px mt-12px mb-8px relative block sticky top-15px">
+  <div
+    class="p-10px mt-12px mb-8px relative block sticky top-15px transition-400"
+    :style="{
+      opacity: showUp.opacities.value[1],
+      transform: `translate(0px, ${showUp.translations.value[1]}px)`
+    }"
+  >
     <textarea
       class="w-100% min-h-3.5rem p-10px pl-13px pr-13px focus:shadow-lg transition-160"
       v-model="talkContent"
@@ -40,8 +52,8 @@
     v-for="(talk, index) in talks"
     class="p-15px mt-4.5rem mb-4.5rem transition-400"
     :style="{
-      opacity: showUp.opacities.value[index],
-      transform: `translate(0px, ${showUp.translations.value[index]}px)`
+      opacity: showUp.opacities.value[index + 2],
+      transform: `translate(0px, ${showUp.translations.value[index + 2]}px)`
     }"
   >
     <p class="text-mid-gray text-1.2rem m-8px ml-5px">
@@ -52,11 +64,11 @@
     <p class="flex justify-end">
       <button class="flex mb-0.8rem border-0" @click="like(talk.id)">
         <span
-          class="i-mingcute-heart-fill mr-0.2rem text-my-red hover:translate-y--3px transition-50"
+          class="i-mingcute-heart-fill mr-0.2rem text-my-red like transition-50"
           v-if="liked.find((x) => x === talk.id)"
         ></span>
         <span
-          class="i-mingcute-heart-line mr-0.2rem text-mid-gray hover:translate-y--3px transition-50 hover:text-my-red op-80"
+          class="i-mingcute-heart-line mr-0.2rem text-mid-gray like transition-50"
           v-else
         ></span>
         <span>
@@ -145,12 +157,12 @@ const like = async (id: number) => {
   }
 }
 
-const showUp = useShowUp(talks.value.length, 240)
+const showUp = useShowUp(talks.value.length + 2, 240)
 
 onMounted(() =>
   (async () => {
     await getTalks()
-    showUp.setLength(talks.value.length)
+    showUp.setLength(talks.value.length + 2)
     await sleep(120)
     await showUp.translate()
   })()
@@ -181,6 +193,21 @@ textarea ~ div button {
 }
 textarea:focus ~ div button {
   display: flex;
+}
+/* mobile friendly :hover */
+@media (any-hover: hover) {
+  .like:hover {
+    transform: translate(0, -3px);
+  }
+  .i-mingcute-heart-line:hover {
+    opacity: 0.8;
+    color: var(--my-red);
+  }
+}
+@media (any-hover: none) {
+  .like:active {
+    transform: translate(0, -3px);
+  }
 }
 .sticky {
   background-color: rgba(234, 234, 234, 0.2);
