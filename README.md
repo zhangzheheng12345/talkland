@@ -1,3 +1,3 @@
 # Talkland
 
-Where we talk.
+Where we talk. 💬

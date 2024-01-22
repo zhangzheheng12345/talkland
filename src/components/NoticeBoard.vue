@@ -1,15 +1,16 @@
 <template>
-  <button
-    @click="backToHome"
-    class="flex items-center transition-160 mt-0.7rem text-1.05rem border-0 transition-160"
+  <nav
+    class="flex items-center mt-0.7rem transition-400"
     :style="{
       opacity: showUp.opacities.value[0],
       transform: `translate(0px, ${showUp.translations.value[0]}px)`
     }"
   >
-    <span class="i-mingcute-left-fill transition-400"></span>
-    <span class="pl-3px">回到开始页</span>
-  </button>
+    <button
+      @click="backToHome"
+      class="text-1.3rem i-mingcute-arrow-left-fill hover:text-my-blue hover:translate-x--3px transition-160"
+    ></button>
+  </nav>
   <h1
     class="text-2rem text-center my-2rem transition-400"
     :style="{
@@ -35,7 +36,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import { useShowUp } from '@/logics/showUp'
+import { sleep, useShowUp } from '@/logics/showUp'
 import { onMounted } from 'vue'
 
 const router = useRouter()
@@ -50,7 +51,8 @@ const stateText =
 
 const showUp = useShowUp(stateText.length + 2, 200)
 
-const backToHome = () => {
+const backToHome = async () => {
+  await sleep(160)
   router.push('/')
 }
 </script>
@@ -58,10 +60,6 @@ const backToHome = () => {
 <style scoped>
 p {
   margin: 8px;
-}
-button:hover .i-mingcute-left-fill {
-  transform: translate(-3px, 0);
-  color: var(--my-blue);
 }
 h1 {
   letter-spacing: 1px;

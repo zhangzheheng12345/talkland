@@ -6,21 +6,19 @@
       transform: `translate(0px, ${showUp.translations.value[0]}px)`
     }"
   >
+    <button
+      @click="toWelcomePage"
+      class="text-1.3rem hover:translate-x--3px hover:text-my-blue transition-160 i-mingcute-arrow-left-fill"
+    ></button>
     <span
-      class="i-mingcute-loading-3-fill animate-spin text-1.3rem"
+      class="i-mingcute-loading-3-fill animate-spin text-1.3rem ml-auto"
       v-if="loading"
     ></span
     ><button
-      class="i-mingcute-refresh-2-fill text-1.3rem hover:rotate-60 transition-160"
+      class="i-mingcute-refresh-2-fill text-1.3rem hover:rotate-45 hover:text-my-blue transition-160 ml-auto"
       v-else
       @click="getTalks"
     ></button>
-    <button
-      @click="toWelcomePage"
-      class="text-1.4rem mono-more ml-auto font-bold title_ hover:translate-y--3px transition-160"
-    >
-      Talkland
-    </button>
   </nav>
   <div
     class="p-10px mt-12px mb-8px relative block sticky top-15px transition-400"
@@ -59,8 +57,8 @@
       transform: `translate(0px, ${showUp.translations.value[index + 2]}px)`
     }"
   >
-    <p class="text-mid-gray text-1.2rem m-8px ml-5px">
-      <span class="font-bold text-1.3rem text-mid-gray">#</span>
+    <p class="text-mid-gray text-1.3rem m-8px ml-5px">
+      <span class="font-bold text-1.4rem text-mid-gray">#</span>
       {{ talk.id }}
     </p>
     <p class="min-h-10 vh pl-10px text-1.13rem mb-0.85rem">{{ talk.text }}</p>
@@ -217,10 +215,5 @@ textarea:focus ~ div button {
   background-color: rgba(234, 234, 234, 0.2);
   backdrop-filter: blur(4px);
   border-radius: 8px;
-}
-.title_ {
-  border-width: 0px;
-  border-bottom: 2px solid var(--deep-gray);
-  padding-bottom: 4px;
 }
 </style>
