@@ -45,7 +45,7 @@ onMounted(() => showUp.translate())
 // Use / to sep paragraphs
 // Use || to add a <br />
 const stateText =
-  '你好呀！/这里是 Talkland ！/||/你可以/聆听心声，/畅所欲言，/以一个/匿名者。/||/声明：/> 每篇 Talk 应在200字以内。/> 言论责任自负。'.split(
+  '你好呀！/这里是 Talkland ！/||/你可以/聆听心声，/畅所欲言，/以一个/匿名者。/||/声明：/> 每篇 Talk 应在300字以内。/> 言论责任自负。'.split(
     '/'
   )
 

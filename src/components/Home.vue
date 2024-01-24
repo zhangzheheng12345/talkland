@@ -2,8 +2,8 @@
   <nav
     class="flex items-center justify-strecth mt-17px p-7px mb-1.6rem transition-400"
     :style="{
-      opacity: showUp.opacities.value[0],
-      transform: `translate(0px, ${showUp.translations.value[0]}px)`
+      opacity: showUp1.opacities.value[0],
+      transform: `translate(0px, ${showUp1.translations.value[0]}px)`
     }"
   >
     <button
@@ -23,8 +23,8 @@
   <div
     class="p-10px mt-12px mb-8px relative block sticky top-15px transition-400"
     :style="{
-      opacity: showUp.opacities.value[1],
-      transform: `translate(0px, ${showUp.translations.value[1]}px)`
+      opacity: showUp1.opacities.value[1],
+      transform: `translate(0px, ${showUp1.translations.value[1]}px)`
     }"
   >
     <textarea
@@ -36,6 +36,13 @@
       v-if="talkContent.length === 0"
     >
       写点什么...
+    </div>
+    <div
+      v-if="talkContent.length > maxTalkLength"
+      class="flex items-center text-0.95rem text-my-red op-75 m-4px"
+    >
+      <span class="i-mingcute-warning-line mr-4px"></span>
+      <span>Talk 过长</span>
     </div>
     <div class="flex justify-center">
       <button
@@ -53,8 +60,8 @@
     v-for="(talk, index) in talks"
     class="p-15px mt-4.5rem mb-4.5rem transition-400"
     :style="{
-      opacity: showUp.opacities.value[index + 2],
-      transform: `translate(0px, ${showUp.translations.value[index + 2]}px)`
+      opacity: showUp2.opacities.value[index],
+      transform: `translate(0px, ${showUp2.translations.value[index]}px)`
     }"
   >
     <p class="text-mid-gray text-1.3rem m-8px ml-5px">
@@ -118,20 +125,25 @@ const getTalks = async () => {
   loading.value = false
 }
 
+const maxTalkLength = 300
 const talkContent = useStorage('talk-draft', '')
 const submitTalk = async () => {
   const content = talkContent.value
   talkContent.value = ''
-  if (talkContent.value.length > 200) {
+  if (talkContent.value.length > maxTalkLength) {
     alert('Talk过长')
     return
+  } else if (talkContent.value.length === 0) {
+    alert('Talk不能为空')
+    return
   }
+  loading.value = true
   const { error } = await client.from(projectDBTableName).insert({
     text: content,
     time: dayjs().format('YYYY / MM / DD')
   })
   if (error != null) {
-    alert('Request error')
+    alert('请求错误')
     return
   }
   await getTalks()
@@ -158,14 +170,16 @@ const like = async (id: number) => {
   }
 }
 
-const showUp = useShowUp(talks.value.length + 2, 240)
+const showUp1 = useShowUp(2, 240)
+onMounted(() => showUp1.translate())
 
+const showUp2 = useShowUp(talks.value.length, 240)
 onMounted(() =>
   (async () => {
     await getTalks()
-    showUp.setLength(talks.value.length + 2)
+    showUp2.setLength(talks.value.length)
     await sleep(120)
-    await showUp.translate()
+    await showUp2.translate()
   })()
 )
 
@@ -215,5 +229,6 @@ textarea:focus ~ div button {
   background-color: rgba(234, 234, 234, 0.2);
   backdrop-filter: blur(4px);
   border-radius: 8px;
+  z-index: 999;
 }
 </style>
