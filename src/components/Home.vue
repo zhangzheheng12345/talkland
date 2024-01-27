@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex items-center justify-strecth mt-17px p-7px mb-1.6rem transition-400"
+    class="flex items-center justify-strecth mt-17px p-7px mb-1.6rem transition-400 text-1.3rem"
     :style="{
       opacity: showUp1.opacities.value[0],
       transform: `translate(0px, ${showUp1.translations.value[0]}px)`
@@ -8,14 +8,15 @@
   >
     <button
       @click="toWelcomePage"
-      class="text-1.3rem hover:translate-x--3px hover:text-my-blue transition-160 i-mingcute-arrow-left-fill"
+      class="hover:translate-x--3px hover:text-my-blue transition-160 i-mingcute-arrow-left-fill"
     ></button>
-    <span
-      class="i-mingcute-loading-3-fill animate-spin text-1.3rem ml-auto"
-      v-if="loading"
-    ></span
-    ><button
-      class="i-mingcute-refresh-2-fill text-1.3rem hover:rotate-45 hover:text-my-blue transition-160 ml-auto"
+    <button
+      class="i-mingcute-settings-1-fill hover:rotate-60 hover:text-my-blue transition-160 ml-auto mr-5px text-1.4rem"
+      @click="toSettingPage"
+    ></button>
+    <span class="i-mingcute-loading-3-fill animate-spin" v-if="loading"></span>
+    <button
+      class="i-mingcute-refresh-2-fill hover:rotate-45 hover:text-my-blue transition-160"
       v-else
       @click="getTalks"
     ></button>
@@ -58,7 +59,7 @@
   </div>
   <div
     v-for="(talk, index) in talks"
-    class="p-15px mt-4.5rem mb-4.5rem transition-400"
+    class="p-15px mt-4rem mb-4rem transition-400"
     :style="{
       opacity: showUp2.opacities.value[index],
       transform: `translate(0px, ${showUp2.translations.value[index]}px)`
@@ -98,6 +99,9 @@ import dayjs from 'dayjs'
 import { useShowUp } from '@/logics/showUp'
 import { sleep } from '@/logics/showUp'
 import { projectDBUrl, projectDBAnonKey, projectDBTableName } from '@/config'
+import { useSettings } from '@/logics/settings'
+
+const settings = useSettings()
 
 type Talk = {
   id: number
@@ -130,10 +134,10 @@ const talkContent = useStorage('talk-draft', '')
 const submitTalk = async () => {
   const content = talkContent.value
   talkContent.value = ''
-  if (talkContent.value.length > maxTalkLength) {
+  if (content.length > maxTalkLength) {
     alert('Talk过长')
     return
-  } else if (talkContent.value.length === 0) {
+  } else if (content.length === 0) {
     alert('Talk不能为空')
     return
   }
@@ -189,6 +193,17 @@ const toWelcomePage = async () => {
   await sleep(160)
   router.push('/')
 }
+const toSettingPage = async () => {
+  await sleep(160)
+  router.push('/setting')
+}
+
+onMounted(() =>
+  window.addEventListener('beforeunload', () => {
+    if (!settings.talkStored) window.localStorage.removeItem('talks')
+    if (!settings.draftStored) window.localStorage.removeItem('talk-draft')
+  })
+)
 </script>
 
 <style scoped>
