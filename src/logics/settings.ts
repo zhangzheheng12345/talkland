@@ -11,5 +11,14 @@ export const useSettings = defineStore('settings', {
     maxContentWidth: 500,
     talkStored: true,
     draftStored: true
-  })
+  }),
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'settings',
+        storage: localStorage
+      }
+    ]
+  }
 })

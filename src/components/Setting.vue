@@ -32,7 +32,7 @@
     <SettingItem :index="3" :show-up="showUp">
       <span>Talk 数据缓存</span>
       <span
-        class="ml-auto"
+        class="ml-auto text-1.3rem toggle transition-160"
         :class="
           settingsTemp.talkStored
             ? 'i-mingcute-toggle-right-fill'
@@ -44,7 +44,7 @@
     <SettingItem :index="4" :show-up="showUp">
       <span>Talk 草稿保存</span>
       <span
-        class="ml-auto"
+        class="ml-auto text-1.3rem toggle transition-160"
         :class="
           settingsTemp.draftStored
             ? 'i-mingcute-toggle-right-fill'
@@ -59,7 +59,7 @@
         @click="apply"
       >
         <span>应用</span>
-        <span class="i-mingcute-pin-line ml-7px mr-1px transition-160"></span>
+        <span class="ml-7px mr-1px transition-160 i-mingcute-pin-line"></span>
       </button>
     </SettingItem>
   </ul>
@@ -87,6 +87,7 @@ const apply = () => {
   settings.maxContentWidth = settingsTemp.value.maxContentWidth
   settings.talkStored = settingsTemp.value.talkStored
   settings.draftStored = settingsTemp.value.draftStored
+  backToHome()
 }
 
 const showUp = useShowUp(6, 240)
@@ -116,6 +117,9 @@ const backToHome = async () => {
     box-shadow: var(--un-ring-offset-shadow), var(--un-ring-shadow),
       var(--un-shadow);
   }
+  .toggle:hover {
+    transform: translate(3px, 0);
+  }
 }
 @media (any-hover: none) or (hover: hover) {
   button:active .i-mingcute-pin-line {
@@ -130,6 +134,9 @@ const backToHome = async () => {
               0.1));
     box-shadow: var(--un-ring-offset-shadow), var(--un-ring-shadow),
       var(--un-shadow);
+  }
+  .toggle:active {
+    transform: translate(3px, 0);
   }
 }
 </style>
