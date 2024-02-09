@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center slide-enter-content">
-    <h1 class="m-1.2rem mt-2rem text-3rem text-center transition-460">
-      Talkland 言他
+    <h1 class="m-1.2rem mt-2rem text-3rem text-center">
+      Talkland
     </h1>
     <p class="m-1.5rem text-1.2rem mb-25vh h-3rem text-center text-#8a8a8a">
       {{ typer.typer.value }}

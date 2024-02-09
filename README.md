@@ -1,3 +1,3 @@
-# Talkland
+# Talkland | 言他
 
-Where we talk. 💬
+Where we talk. 💬 说话。
