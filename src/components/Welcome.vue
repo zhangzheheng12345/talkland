@@ -1,12 +1,6 @@
 <template>
-  <div class="flex flex-col items-center">
-    <h1
-      class="m-1.2rem mt-2rem text-3rem text-center transition-460"
-      :style="{
-        opacity: showUp.opacities.value[0],
-        transform: `translate(0px, ${showUp.translations.value[1]}px)`
-      }"
-    >
+  <div class="flex flex-col items-center slide-enter-content">
+    <h1 class="m-1.2rem mt-2rem text-3rem text-center transition-460">
       Talkland
     </h1>
     <p class="m-1.5rem text-1.2rem mb-25vh h-3rem text-center text-#8a8a8a">
@@ -15,10 +9,6 @@
     <button
       @click="skipToHome"
       class="flex items-center button p-5px pl-8px pr-6px transition-160 hover:shadow-lg"
-      :style="{
-        opacity: showUp.opacities.value[1],
-        transform: `translate(0px, ${showUp.translations.value[1]}px)`
-      }"
     >
       <span class="text-1.3rem font-bold pl-7px">进入</span>
       <span
@@ -28,10 +18,6 @@
     <button
       @click="skipToNoticeBoard"
       class="flex items-center button p-4px pl-7px pr-5px transition-160 mt-2rem hover:shadow-lg text-1.2rem"
-      :style="{
-        opacity: showUp.opacities.value[2],
-        transform: `translate(0px, ${showUp.translations.value[2]}px)`
-      }"
     >
       <span class="font-bold pl-5px">公告牌</span>
       <span class="i-mingcute-right-fill transition-160"></span>
@@ -39,10 +25,6 @@
     <button
       @click="skipToGitHub"
       class="flex items-center button p-4px pl-7px pr-5px transition-160 mt-0.7rem text-1.2rem"
-      :style="{
-        opacity: showUp.opacities.value[3],
-        transform: `translate(0px, ${showUp.translations.value[3]}px)`
-      }"
     >
       <span class="font-bold pl-5px">GitHub</span>
       <span class="i-mingcute-github-line ml-3px mr-2px transition-140"></span>
@@ -53,7 +35,7 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { useShowUp, sleep } from '@/logics/showUp'
+import { sleep } from '@/logics/showUp'
 import { useTyper } from '@/logics/typer'
 import { projectLink } from '@/config'
 
@@ -74,9 +56,6 @@ const skipToGitHub = async () => {
   await sleep(160)
   window.open(projectLink)
 }
-
-const showUp = useShowUp(4, 360)
-onMounted(() => showUp.translate())
 </script>
 <style scoped>
 button:hover .i-mingcute-arrows-right-fill {

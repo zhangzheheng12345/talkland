@@ -1,68 +1,56 @@
 <template>
-  <nav
-    class="transition-400"
-    :style="{
-      opacity: showUp.opacities.value[0],
-      transform: `translate(0px, ${showUp.translations.value[0]}px)`
-    }"
-  >
-    <button
-      @click="backToHome"
-      class="text-1.3rem i-mingcute-arrow-left-fill hover:text-my-blue hover:translate-x--3px transition-160"
-    ></button>
-  </nav>
-  <h1
-    class="text-1.6rem my-0.8rem transition-400"
-    :style="{
-      opacity: showUp.opacities.value[1],
-      transform: `translate(0px, ${showUp.translations.value[1]}px)`
-    }"
-  >
-    设置
-  </h1>
-  <ul>
-    <SettingItem :index="2" :show-up="showUp">
-      <span>最大内容宽度</span>
-      <input
-        type="number"
-        v-model="settingsTemp.maxContentWidth"
-        class="ml-auto"
-      />
-    </SettingItem>
-    <SettingItem :index="3" :show-up="showUp">
-      <span>Talk 数据缓存</span>
-      <span
-        class="ml-auto text-1.3rem toggle transition-160"
-        :class="
-          settingsTemp.talkStored
-            ? 'i-mingcute-toggle-right-fill'
-            : 'i-mingcute-toggle-left-line'
-        "
-        @click="settingsTemp.talkStored = !settingsTemp.talkStored"
-      ></span>
-    </SettingItem>
-    <SettingItem :index="4" :show-up="showUp">
-      <span>Talk 草稿保存</span>
-      <span
-        class="ml-auto text-1.3rem toggle transition-160"
-        :class="
-          settingsTemp.draftStored
-            ? 'i-mingcute-toggle-right-fill'
-            : 'i-mingcute-toggle-left-line'
-        "
-        @click="settingsTemp.draftStored = !settingsTemp.draftStored"
-      ></span>
-    </SettingItem>
-    <SettingItem :index="5" :show-up="showUp">
+  <div class="slide-enter-content">
+    <nav class="transition-400">
       <button
-        class="flex items-center button pl-10px mt-10vh m-auto"
-        @click="apply"
-      >
-        <span>应用</span>
-        <span class="ml-7px mr-1px transition-160 i-mingcute-pin-line"></span>
-      </button>
-    </SettingItem>
-  </ul>
+        @click="backToHome"
+        class="text-1.3rem i-mingcute-arrow-left-fill hover:text-my-blue hover:translate-x--3px transition-160"
+      ></button>
+    </nav>
+    <h1 class="text-1.6rem my-0.8rem transition-400">设置</h1>
+    <ul class="slide-enter-content">
+      <SettingItem>
+        <span>最大内容宽度</span>
+        <input
+          type="number"
+          v-model="settingsTemp.maxContentWidth"
+          class="ml-auto"
+        />
+      </SettingItem>
+      <SettingItem>
+        <span>Talk 数据缓存</span>
+        <span
+          class="ml-auto text-1.3rem toggle transition-160"
+          :class="
+            settingsTemp.talkStored
+              ? 'i-mingcute-toggle-right-fill'
+              : 'i-mingcute-toggle-left-line'
+          "
+          @click="settingsTemp.talkStored = !settingsTemp.talkStored"
+        ></span>
+      </SettingItem>
+      <SettingItem>
+        <span>Talk 草稿保存</span>
+        <span
+          class="ml-auto text-1.3rem toggle transition-160"
+          :class="
+            settingsTemp.draftStored
+              ? 'i-mingcute-toggle-right-fill'
+              : 'i-mingcute-toggle-left-line'
+          "
+          @click="settingsTemp.draftStored = !settingsTemp.draftStored"
+        ></span>
+      </SettingItem>
+      <SettingItem>
+        <button
+          class="flex items-center button pl-10px mt-10vh m-auto"
+          @click="apply"
+        >
+          <span>应用</span>
+          <span class="ml-7px mr-1px transition-160 i-mingcute-pin-line"></span>
+        </button>
+      </SettingItem>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -71,7 +59,7 @@ import { useRouter } from 'vue-router'
 
 import SettingItem from './SettingItem.vue'
 
-import { sleep, useShowUp } from '@/logics/showUp'
+import { sleep } from '@/logics/showUp'
 import type { Settings } from '@/logics/settings'
 import { useSettings } from '@/logics/settings'
 
@@ -89,9 +77,6 @@ const apply = () => {
   settings.draftStored = settingsTemp.value.draftStored
   backToHome()
 }
-
-const showUp = useShowUp(6, 240)
-onMounted(() => showUp.translate())
 
 const router = useRouter()
 
